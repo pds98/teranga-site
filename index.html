@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta property="og:title" content="Teranga — Services immobiliers à Montréal">
-<meta property="og:description" content="Peinture, nettoyage, réparations, informatique et sécurité incendie. Une seule équipe, un seul appel.">
+<meta property="og:title" content="Teranga — Services immobiliers · Property services, Montréal">
+<meta property="og:description" content="Peinture, nettoyage, réparations, informatique et sécurité incendie. Painting, cleaning, repairs, IT and fire safety.">
 <meta name="theme-color" content="#0B1124">
+<link rel="alternate" hreflang="fr" href="./">
+<link rel="alternate" hreflang="en" href="./">
 <title>Teranga</title>
 <meta name="description" content="Teranga — services immobiliers à Montréal : peinture, nettoyage, réparations, informatique et sécurité incendie.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,6 +68,11 @@ p{margin:0}
 .nav-links a{text-decoration:none;transition:color .2s}
 .nav-links a:hover{color:var(--cream)}
 @media (max-width:860px){.nav-links{display:none}}
+
+.nav-right{display:flex;align-items:center;gap:10px}
+.lang{display:flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:999px;background:rgba(246,239,227,.04)}
+.lang button{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted);background:transparent;border:0;border-radius:999px;padding:7px 10px;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--cream);color:var(--on-accent);font-weight:500}
 
 /* ---------- HERO ---------- */
 .hero{position:relative;overflow:hidden;min-height:min(92vh,880px);display:flex;align-items:center;isolation:isolate;border-bottom:1px solid var(--line)}
@@ -253,7 +260,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <a href="#realisations">Avant / après</a>
       <a href="#equipe">Équipe</a>
     </nav>
-    <a class="btn btn-primary btn-sm" href="#contact">Devis gratuit</a>
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Langue">
+        <button type="button" data-lang="fr" aria-pressed="true" lang="fr">FR</button>
+        <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+      </div>
+      <a class="btn btn-primary btn-sm" href="#contact">Devis gratuit</a>
+    </div>
   </div>
 </header>
 
@@ -521,6 +534,157 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s, r = document) => r.querySelector(s);
 
+  /* ---------- Langue FR / EN ----------
+     Le français est écrit dans le HTML ; EN associe chaque texte français (espaces normalisés)
+     à sa traduction. T contient les textes générés par le script. */
+  const EN = {
+    'Clé en main': 'Turnkey', 'Méthode': 'Method', 'Avant / après': 'Before / after', 'Équipe': 'Team',
+    'Devis gratuit': 'Free quote',
+    'Services immobiliers · Montréal': 'Property services · Montréal',
+    'Vos logements,': 'Your units,', 'prêts à louer.': 'ready to rent.', 'impeccables.': 'spotless.',
+    'sécurisés.': 'secure.', 'connectés.': 'connected.',
+    'Peinture, nettoyage, réparations, informatique et sécurité incendie. Une seule équipe, un seul appel, et des photos avant / après à chaque intervention.':
+      'Painting, cleaning, repairs, IT and fire safety. One team, one call, and before / after photos on every job.',
+    'Demander un devis →': 'Get a quote →', 'Voir avant / après': 'See before / after',
+    'Photos avant / après': 'Before / after photos', 'Licence sécurité incendie': 'Licensed fire safety',
+    'CHANTIER EN COURS': 'JOB IN PROGRESS', 'Exemple': 'Example', 'Forfait Clé en main': 'Turnkey package',
+    '4½ libéré · entre deux locataires': 'Vacant 4½ · between tenants',
+    '<span class="dot"></span>Nettoyage complet': '<span class="dot"></span>Deep cleaning',
+    '<span class="dot"></span>Peinture &amp; retouches': '<span class="dot"></span>Painting &amp; touch-ups',
+    '<span class="dot"></span>Réparations': '<span class="dot"></span>Repairs',
+    '<span class="dot"></span>Vérifications': '<span class="dot"></span>Inspections',
+    '<span class="dot"></span>Photos avant / après': '<span class="dot"></span>Before / after photos',
+    'Peinture': 'Painting', 'Nettoyage': 'Cleaning', 'Réparations': 'Repairs',
+    'Sites web &amp; chatbots': 'Websites &amp; chatbots', 'Informatique': 'IT', 'Sécurité incendie': 'Fire safety',
+    'Alarmes': 'Alarms', 'Conciergerie': 'Concierge',
+    'Notre offre phare': 'Our signature offer', 'Le forfait Clé en main': 'The Turnkey package',
+    'Un locataire part ? Un seul appel. On vous rend un logement prêt à louer, sans que vous ayez à coordonner qui que ce soit.':
+      'A tenant moves out? One call. We hand you back a unit that’s ready to rent, with nobody for you to coordinate.',
+    '<small>01</small>Nettoyage complet': '<small>01</small>Deep cleaning',
+    '<small>02</small>Peinture &amp; retouches': '<small>02</small>Painting &amp; touch-ups',
+    '<small>03</small>Réparations': '<small>03</small>Repairs',
+    '<small>04</small>Vérifications': '<small>04</small>Inspections',
+    '<small>05</small>Photos avant / après': '<small>05</small>Before / after photos',
+    'Logement prêt ✓': 'Ready to rent ✓',
+    'Nos services': 'Our services', 'Tout votre immeuble, une seule équipe': 'Your whole building, one team',
+    'Le cœur du métier pour remettre vos logements en état, et une vraie expertise technique que peu d’équipes d’entretien peuvent offrir.':
+      'Core trades to get your units back in shape, plus real technical expertise that few maintenance teams can offer.',
+    'Le cœur du métier': 'Core trades',
+    'Préparation et protection des surfaces': 'Surface prep and protection',
+    'Trous et imperfections réparés': 'Holes and dents patched',
+    'Apprêt et peinture de finition': 'Primer and finish coats',
+    'Rafraîchissement entre deux locations': 'Refresh between tenancies',
+    'Retouches des espaces communs': 'Common-area touch-ups',
+    'Nettoyage &amp; entretien': 'Cleaning &amp; upkeep',
+    'Logements vacants, avant l’arrivée des locataires': 'Vacant units, before move-in',
+    'Cuisines et salles de bain': 'Kitchens and bathrooms',
+    'Corridors, escaliers, espaces communs': 'Hallways, stairs, common areas',
+    'Nettoyage après travaux': 'Post-renovation cleanup',
+    'Entretien régulier de l’immeuble': 'Routine building upkeep',
+    'Poignées et accessoires': 'Handles and fixtures', 'Étagères et fixations': 'Shelves and mounting',
+    'Finitions et ajustements': 'Finishing and adjustments', 'Entretien général': 'General maintenance',
+    'Technologie': 'Technology', 'Informatique &amp; web': 'IT &amp; web',
+    'Sites web et chatbots sur mesure': 'Custom websites and chatbots',
+    'Ordinateurs et réseaux Wi-Fi': 'Computers and Wi-Fi networks',
+    'Diagnostic et dépannage': 'Diagnostics and troubleshooting',
+    'Équipements connectés': 'Smart devices', 'Soutien au bureau de gestion': 'Support for your management office',
+    'Sécurité': 'Security', 'Sécurité &amp; incendie': 'Security &amp; fire',
+    'Systèmes d’alarme': 'Alarm systems', 'Systèmes de sécurité incendie': 'Fire safety systems',
+    'Détection et alerte': 'Detection and alerts', 'Caméras et surveillance': 'Cameras and monitoring',
+    'Réalisé par <b>Pape Bouna</b>, titulaire de la licence exigée au Québec.':
+      'Done by <b>Pape Bouna</b>, who holds the licence required in Québec.',
+    'Notre méthode': 'Our method', 'Cinq étapes, zéro surprise': 'Five steps, zero surprises',
+    'Demande': 'Request', 'Visite': 'Site visit', 'Devis clair': 'Clear quote', 'Travaux': 'The work',
+    'Rapport photo': 'Photo report',
+    'Un appel ou un texto. On vous répond rapidement.': 'A call or a text. We get back to you fast.',
+    'On évalue le logement sur place, sans frais.': 'We assess the unit on site, free of charge.',
+    'Le prix est fixé et approuvé avant de commencer.': 'The price is set and approved before we start.',
+    'Travail soigné, chantier laissé propre.': 'Careful work, site left clean.',
+    'Photos avant / après envoyées. Vous validez.': 'Before / after photos sent. You sign off.',
+    'Nos réalisations': 'Our work', 'Glissez pour voir la différence': 'Slide to see the difference',
+    'Chaque intervention est documentée avant et après. Faites glisser la poignée pour comparer.':
+      'Every job is documented before and after. Drag the handle to compare.',
+    'AVANT': 'BEFORE', 'APRÈS': 'AFTER', 'Aperçu de démonstration': 'Demo preview',
+    'Les premiers chantiers arrivent': 'First jobs coming soon',
+    'Nos photos avant / après seront publiées ici au fil des interventions. L’aperçu ci-contre montre comment elles s’afficheront.':
+      'Our before / after photos will be posted here as jobs are completed. The preview shows how they will look.',
+    'Nos engagements': 'Our commitments', 'Ce que vous pouvez exiger de nous': 'What you can expect from us',
+    'Réponse rapide': 'Fast response', 'Chantier propre': 'Clean site', 'Un seul interlocuteur': 'One point of contact',
+    'Respect des locataires': 'Respect for tenants',
+    'Vous n’attendez pas après nous.': 'You’re never left waiting on us.',
+    'Validé par vous avant chaque travail.': 'Approved by you before any work begins.',
+    'Quand on part, il ne reste que le résultat.': 'When we leave, only the result remains.',
+    'Une preuve pour chaque intervention.': 'Proof for every job.',
+    'Une communication directe, sans détour.': 'Direct, straightforward communication.',
+    'Discrétion et politesse, toujours.': 'Discreet and courteous, always.',
+    'L’équipe': 'The team', 'Deux spécialistes, une seule équipe': 'Two specialists, one team',
+    'Installation d’équipements de sécurité et de systèmes incendie. Titulaire de la licence exigée au Québec.':
+      'Installs security equipment and fire safety systems. Holds the licence required in Québec.',
+    'Informatique &amp; génie logiciel': 'IT &amp; software engineering',
+    'Technicien informatique et ingénieur en génie logiciel. Sites web, chatbots, réseaux, dépannage. Devis, suivi et rapports photo.':
+      'IT technician and software engineer. Websites, chatbots, networks, troubleshooting. Quotes, follow-up and photo reports.',
+    'Ensemble, déjà à l’œuvre': 'Together, already on the job',
+    'Conciergerie d’immeuble': 'Building concierge', 'Nettoyage et entretien': 'Cleaning and upkeep',
+    'Peinture entre deux locataires': 'Painting between tenants', 'Réparations et finitions': 'Repairs and finishing',
+    'Parlons-en': 'Let’s talk', 'Un logement se libère bientôt ?': 'A unit opening up soon?',
+    'Confiez-nous-le comme appartement pilote. Devis gratuit, approuvé d’avance, et vous jugez sur le résultat.':
+      'Let us take it on as a pilot unit. Free quote, approved upfront, and you judge us on the result.',
+    'Appeler': 'Call', 'Texto': 'Text', 'Copier': 'Copy',
+    '<b style="color:var(--cream);font-family:var(--display)">Teranga<span style="color:var(--orange)">.</span></b> · Services immobiliers · Montréal':
+      '<b style="color:var(--cream);font-family:var(--display)">Teranga<span style="color:var(--orange)">.</span></b> · Property services · Montréal',
+    '« Teranga » : l’hospitalité, en wolof.': '“Teranga” means hospitality in Wolof.',
+  };
+  const ATTR_EN = {
+    'Teranga, accueil': 'Teranga, home', 'Points forts': 'Highlights',
+    'Exemple : forfait Clé en main en cours': 'Example: Turnkey package in progress',
+    'Filtrer par type de travaux': 'Filter by type of work', 'Comparer avant et après': 'Compare before and after',
+    'Langue': 'Language',
+  };
+  const T = {
+    fr: { soundOn: '🔊 Activer le son', soundOff: '🔇 Couper le son', jobPrep: 'Logement en préparation',
+      jobReady: '<b>Logement prêt à louer ✓</b>', copy: 'Copier', copied: 'Copié ✓', selected: 'Sélectionné',
+      all: 'Tous', demoTitle: 'Mur de salon', demoCat: 'DÉMO',
+      demoBefore: 'Démonstration : mur taché et abîmé avant les travaux',
+      demoAfter: 'Démonstration : même pièce repeinte après les travaux',
+      before: t => `${t}, avant les travaux`, after: t => `${t}, après les travaux`,
+      cat: c => c, desc: 'Teranga — services immobiliers à Montréal : peinture, nettoyage, réparations, informatique et sécurité incendie.' },
+    en: { soundOn: '🔊 Sound on', soundOff: '🔇 Sound off', jobPrep: 'Unit being prepared',
+      jobReady: '<b>Ready to rent ✓</b>', copy: 'Copy', copied: 'Copied ✓', selected: 'Selected',
+      all: 'All', demoTitle: 'Living room wall', demoCat: 'DEMO',
+      demoBefore: 'Demo: stained, damaged wall before the work',
+      demoAfter: 'Demo: the same room repainted after the work',
+      before: t => `${t}, before the work`, after: t => `${t}, after the work`,
+      cat: c => ({ Peinture: 'Painting', Nettoyage: 'Cleaning', 'Réparations': 'Repairs', 'Sécurité': 'Security', Informatique: 'IT' })[c] || c,
+      desc: 'Teranga — property services in Montréal: painting, cleaning, repairs, IT and fire safety.' },
+  };
+  const norm = s => s.replace(/\s+/g, ' ').trim();
+  let lang = 'fr';
+  const t = (k, ...a) => { const v = (T[lang] || T.fr)[k] ?? T.fr[k]; return typeof v === 'function' ? v(...a) : v; };
+  const langHooks = [];
+  function applyLang(l) {
+    lang = l === 'en' ? 'en' : 'fr';
+    document.documentElement.lang = lang;
+    document.querySelectorAll('body *').forEach(el => {
+      if (el.matches('script,style,svg *') || el.closest('#admin')) return;
+      if (el.dataset.fr === undefined && norm(el.innerHTML) in EN) el.dataset.fr = el.innerHTML;
+      if (el.dataset.fr !== undefined) el.innerHTML = lang === 'en' ? EN[norm(el.dataset.fr)] : el.dataset.fr;
+      const a = el.getAttribute('aria-label');
+      if (a !== null) {
+        if (el.dataset.frLabel === undefined && a in ATTR_EN) el.dataset.frLabel = a;
+        if (el.dataset.frLabel !== undefined) el.setAttribute('aria-label', lang === 'en' ? ATTR_EN[el.dataset.frLabel] : el.dataset.frLabel);
+      }
+    });
+    document.querySelector('meta[name="description"]')?.setAttribute('content', t('desc'));
+    document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+    try { localStorage.setItem('teranga-lang', lang); } catch (e) {}
+    langHooks.forEach(fn => fn());
+  }
+  let saved = null;
+  try { saved = localStorage.getItem('teranga-lang'); } catch (e) {}
+  const initialLang = saved || ((navigator.language || 'fr').toLowerCase().startsWith('fr') ? 'fr' : 'en');
+  document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+
+
   /* ---------- Paint ribbons (hero + contact) ---------- */
   function ribbons(canvas, opts = {}) {
     const ctx = canvas.getContext('2d');
@@ -587,8 +751,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     const pct = Math.round(js / steps.length * 100);
     $('#job-bar').style.width = pct + '%';
     $('#job-pct').textContent = pct + ' %';
-    $('#job-state').innerHTML = js >= steps.length ? '<b>Logement prêt à louer ✓</b>' : 'Logement en préparation';
+    $('#job-state').innerHTML = js >= steps.length ? t('jobReady') : t('jobPrep');
   }
+  langHooks.push(tick);
   if (reduce) { js = steps.length; tick(); }
   else { tick(); setInterval(() => { js = js > steps.length ? 0 : js + 1; tick(); }, 1400); }
 
@@ -606,8 +771,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
   /* ---------- Copy buttons ---------- */
   document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', () => {
-    const txt = b.dataset.copy, done = () => { b.textContent = 'Copié ✓'; setTimeout(() => b.textContent = 'Copier', 1800); };
-    const fallback = () => { const n = b.closest('.phone').querySelector('.num-txt'); const r = document.createRange(); r.selectNodeContents(n); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Sélectionné'; };
+    const txt = b.dataset.copy, done = () => { b.textContent = t('copied'); setTimeout(() => b.textContent = t('copy'), 1800); };
+    const fallback = () => { const n = b.closest('.phone').querySelector('.num-txt'); const r = document.createRange(); r.selectNodeContents(n); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = t('selected'); };
     try { navigator.clipboard.writeText(txt).then(done, fallback); } catch (e) { fallback(); }
   }));
 
@@ -673,14 +838,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     if (!p) {
       demo ??= { before: room(true), after: room(false) };
       $('#img-before').src = demo.before; $('#img-after').src = demo.after;
-      $('#img-before').alt = 'Démonstration : mur taché et abîmé avant les travaux';
-      $('#img-after').alt = 'Démonstration : même pièce repeinte après les travaux';
-      $('#ba-title').textContent = 'Mur de salon'; $('#ba-cat').textContent = 'DÉMO';
+      $('#img-before').alt = t('demoBefore');
+      $('#img-after').alt = t('demoAfter');
+      $('#ba-title').textContent = t('demoTitle'); $('#ba-cat').textContent = t('demoCat');
       $('#demo-badge').hidden = false;
     } else {
       $('#img-before').src = src(p.before); $('#img-after').src = src(p.after);
-      $('#img-before').alt = `${p.title}, avant les travaux`; $('#img-after').alt = `${p.title}, après les travaux`;
-      $('#ba-title').textContent = p.title; $('#ba-cat').textContent = p.category.toUpperCase();
+      $('#img-before').alt = t('before', p.title); $('#img-after').alt = t('after', p.title);
+      $('#ba-title').textContent = p.title; $('#ba-cat').textContent = t('cat', p.category).toUpperCase();
       $('#demo-badge').hidden = true;
     }
     document.querySelectorAll('.thumb').forEach(t => t.setAttribute('aria-current', String(t.dataset.id === p?.id)));
@@ -693,7 +858,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     if (!cats.includes(filter)) filter = 'Tous';
     const fwrap = $('#filters'); fwrap.replaceChildren();
     if (ps.length > 1) cats.forEach(c => {
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'filter'; b.textContent = c;
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'filter'; b.textContent = c === 'Tous' ? t('all') : t('cat', c);
       b.setAttribute('aria-pressed', String(c === filter));
       b.onclick = () => { filter = c; renderGallery(); }; fwrap.append(b);
     });
@@ -708,21 +873,25 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     show(list.find(p => p.id === current?.id) || list[0] || null);
   }
 
+  langHooks.push(() => renderGallery());
+
   function renderVideo() {
     const v = $('#hero-video');
     const btn = $('#sound');
     if (state.heroVideo && !reduce) {
-      v.src = src(state.heroVideo); v.hidden = false; v.play?.().catch(() => {});
-      btn.hidden = false;
+      v.src = src(state.heroVideo); v.hidden = false; v.muted = true; v.play?.().catch(() => {});
+      btn.hidden = false; btn.setAttribute('aria-pressed', 'false'); btn.textContent = t('soundOn');
       btn.onclick = () => {
         v.muted = !v.muted;
         if (!v.muted) { v.volume = .7; v.play?.().catch(() => {}); }
         btn.setAttribute('aria-pressed', String(!v.muted));
-        btn.textContent = v.muted ? '🔊 Activer le son' : '🔇 Couper le son';
+        btn.textContent = v.muted ? t('soundOn') : t('soundOff');
       };
     }
     else { v.removeAttribute('src'); v.hidden = true; btn.hidden = true; }
   }
+
+  langHooks.push(() => { const v = $('#hero-video'); $('#sound').textContent = v.muted ? t('soundOn') : t('soundOff'); });
 
   fetch('data/gallery.json', { cache: 'no-store' })
     .then(r => r.ok ? r.json() : null)
@@ -731,6 +900,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     .finally(() => { renderGallery(); renderVideo(); });
   renderGallery();
 
+  applyLang(initialLang);
 })();
 </script>
 </body>

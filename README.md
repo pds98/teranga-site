@@ -2,6 +2,8 @@
 
 Site vitrine de **Teranga**, services immobiliers à Montréal : peinture, nettoyage, réparations, informatique & web, sécurité & incendie.
 
+Site **bilingue FR / EN** : bouton FR | EN dans la barre du haut ; le site s'ouvre dans la langue du navigateur et retient le choix du visiteur. Les traductions sont dans `index.html` (objets `EN` et `T`).
+
 Site 100 % statique (HTML, CSS, JavaScript), sans compilation : il se déploie tel quel.
 
 ## Structure
