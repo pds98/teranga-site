@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta property="og:title" content="Teranga — Services immobiliers à Montréal">
+<meta property="og:description" content="Peinture, nettoyage, réparations, informatique et sécurité incendie. Une seule équipe, un seul appel.">
+<meta name="theme-color" content="#0B1124">
+<title>Teranga</title>
+<meta name="description" content="Teranga — services immobiliers à Montréal : peinture, nettoyage, réparations, informatique et sécurité incendie.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+html,body{margin:0}
+[hidden]{display:none!important}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+/* Layout: one dark "chantier de nuit" world — paint ribbons flowing behind glass panels,
+   full-bleed bands with a centered 1200px column; bold type in one place (the hero). */
+:root{
+  --ink:#0B1124;          /* page ground: deep night navy */
+  --ink-2:#131B35;        /* raised panels */
+  --ink-3:#1B2546;        /* inputs, chips */
+  --line:rgba(246,239,227,.10);
+  --cream:#F6EFE3;        /* primary text, toned white */
+  --muted:#A9B2C8;        /* secondary text */
+  --orange:#FF6A2B;       /* paint — main accent */
+  --teal:#22C3B5;         /* tech */
+  --sun:#FFC94A;          /* highlight */
+  --on-accent:#0B1124;
+  --danger:#FF8A7A;
+  --display:'Unbounded', 'Arial Black', Arial, sans-serif;
+  --body:'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+  --mono:'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+  --radius:22px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--cream);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+a{color:inherit}
+img,video,canvas{max-width:100%;display:block}
+h1,h2,h3{font-family:var(--display);line-height:1.05;margin:0;text-wrap:balance;letter-spacing:-.02em}
+p{margin:0}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band{padding-block:clamp(72px,10vw,128px);position:relative}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:28px;height:2px;background:currentColor;border-radius:2px}
+.h2{font-size:clamp(30px,5vw,56px);font-weight:700;max-width:16ch}
+.lead{color:var(--muted);font-size:clamp(17px,1.6vw,20px);max-width:58ch}
+.head{display:flex;flex-direction:column;gap:18px;margin-bottom:clamp(36px,5vw,56px)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:700;font-size:16px;padding:15px 24px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;transition:transform .2s ease, box-shadow .2s ease, background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--orange);color:var(--on-accent);box-shadow:0 10px 30px -8px rgba(255,106,43,.6)}
+.btn-ghost{background:rgba(246,239,227,.06);color:var(--cream);border:1px solid var(--line);backdrop-filter:blur(8px)}
+.btn-sm{padding:10px 16px;font-size:14px}
+
+/* ---------- NAV ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(11,17,36,.62);backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:68px}
+.logo{font-family:var(--display);font-weight:800;font-size:22px;text-decoration:none;letter-spacing:-.03em}
+.logo span{color:var(--orange)}
+.nav-links{display:flex;gap:26px;font-size:15px;color:var(--muted)}
+.nav-links a{text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--cream)}
+@media (max-width:860px){.nav-links{display:none}}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;min-height:min(92vh,880px);display:flex;align-items:center;isolation:isolate;border-bottom:1px solid var(--line)}
+.hero-bg{position:absolute;inset:0;z-index:-2}
+.hero-bg canvas{width:100%;height:100%;filter:blur(28px) saturate(130%);transform:scale(1.15)}
+.hero-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.hero-grid{position:absolute;inset:0;z-index:-1;background:
+  radial-gradient(circle at 1px 1px, rgba(246,239,227,.10) 1px, transparent 1.4px) 0 0/28px 28px,
+  linear-gradient(180deg, rgba(11,17,36,.15) 0%, rgba(11,17,36,.55) 70%, var(--ink) 100%);
+  mask-image:linear-gradient(180deg,#000 60%,transparent)}
+.hero-inner{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.9fr);gap:48px;align-items:center;padding-block:72px 88px;width:100%}
+.hero h1{font-size:clamp(40px,7.4vw,96px);font-weight:800;letter-spacing:-.04em}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.08em}
+.hero h1 .line > span{display:inline-block;animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+.hero h1 .line:nth-child(2) > span{animation-delay:.12s}
+.rotator{color:var(--orange);display:inline-grid !important}
+.rotator > b{grid-area:1/1;font-weight:inherit;transition:transform .6s cubic-bezier(.7,0,.2,1),opacity .4s;opacity:0;transform:translateY(100%)}
+.rotator > b.on{opacity:1;transform:none}
+.rotator > b.out{opacity:0;transform:translateY(-100%)}
+.hero .lead{margin-top:26px;animation:fade 1s .35s both}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px;animation:fade 1s .5s both}
+.hero-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px;animation:fade 1s .65s both}
+.tag{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--muted);border:1px solid var(--line);padding:7px 12px;border-radius:999px;background:rgba(11,17,36,.4)}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* live job card */
+.job{background:linear-gradient(160deg,rgba(27,37,70,.78),rgba(19,27,53,.62));border:1px solid rgba(246,239,227,.14);border-radius:26px;padding:26px;backdrop-filter:blur(18px);box-shadow:0 40px 80px -30px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.08);animation:fade 1s .45s both;transform:perspective(1200px) rotateY(-8deg) rotateX(4deg);transition:transform .4s}
+.job:hover{transform:perspective(1200px) rotateY(0) rotateX(0)}
+.job-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px}
+.live{font-family:var(--mono);font-size:12px;color:var(--teal);display:flex;align-items:center;gap:8px;letter-spacing:.08em}
+.live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(34,195,181,.7);animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(34,195,181,0)}100%{box-shadow:0 0 0 0 rgba(34,195,181,0)}}
+.job h3{font-size:20px;font-weight:700;margin:10px 0 4px}
+.job .addr{font-size:14px;color:var(--muted)}
+.steps{list-style:none;margin:20px 0 18px;padding:0;display:flex;flex-direction:column;gap:10px}
+.steps li{display:flex;align-items:center;gap:12px;font-size:15px;padding:10px 12px;border-radius:12px;background:rgba(246,239,227,.04);border:1px solid transparent;transition:background .4s,border-color .4s,color .4s;color:var(--muted)}
+.steps li .dot{width:22px;height:22px;flex:none;border-radius:50%;border:2px solid rgba(246,239,227,.25);display:grid;place-items:center;transition:all .35s}
+.steps li.done{color:var(--cream)}
+.steps li.done .dot{background:var(--teal);border-color:var(--teal)}
+.steps li.done .dot::after{content:"";width:9px;height:5px;border:2px solid var(--on-accent);border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.steps li.now{border-color:rgba(255,106,43,.5);background:rgba(255,106,43,.08);color:var(--cream)}
+.steps li.now .dot{border-color:var(--orange);border-top-color:transparent;animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bar{height:6px;border-radius:6px;background:rgba(246,239,227,.08);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--sun),var(--orange));border-radius:6px;transition:width .6s ease}
+.job-foot{display:flex;justify-content:space-between;margin-top:12px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.job-foot b{color:var(--sun);font-weight:500}
+@media (max-width:900px){.hero-inner{grid-template-columns:1fr;padding-block:56px 64px}.job{transform:none}}
+
+/* ---------- MARQUEE ---------- */
+.marquee{border-bottom:1px solid var(--line);overflow:hidden;background:var(--ink-2)}
+.marquee-track{display:flex;width:max-content;animation:scroll 38s linear infinite}
+.marquee span{font-family:var(--display);font-weight:700;font-size:clamp(18px,2.4vw,28px);padding:20px 26px;white-space:nowrap;display:flex;align-items:center;gap:26px}
+.marquee span::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--orange)}
+.marquee span:nth-child(3n+2)::after{background:var(--teal)}
+.marquee span:nth-child(3n)::after{background:var(--sun)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ---------- OFFRE ---------- */
+.offer{background:radial-gradient(120% 120% at 100% 0%, #FF8550 0%, var(--orange) 45%, #E24E14 100%);color:var(--on-accent);border-radius:34px;padding:clamp(28px,5vw,64px);position:relative;overflow:hidden}
+.offer::after{content:"";position:absolute;right:-120px;bottom:-140px;width:420px;height:420px;border-radius:50%;border:60px solid rgba(255,201,74,.35)}
+.offer .eyebrow{color:var(--on-accent)}
+.offer h2{font-size:clamp(34px,6vw,78px);font-weight:800;max-width:12ch;margin:18px 0}
+.offer p.big{font-size:clamp(18px,2vw,24px);max-width:40ch;font-weight:500}
+.chain{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px;position:relative;z-index:1;align-items:center}
+.chip{background:var(--ink);color:var(--cream);padding:13px 20px;border-radius:999px;font-weight:700;font-size:15px;display:flex;align-items:center;gap:10px}
+.chip small{font-family:var(--mono);color:var(--sun);font-size:12px}
+.chip.final{background:var(--cream);color:var(--on-accent)}
+.arrow{font-size:22px;font-weight:700}
+
+/* ---------- SERVICES ---------- */
+.bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px}
+.card{position:relative;background:linear-gradient(170deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-radius:var(--radius);padding:30px;display:flex;flex-direction:column;gap:14px;overflow:hidden;transform-style:preserve-3d;transition:transform .25s ease,border-color .3s;min-width:0}
+.card:hover{border-color:rgba(246,239,227,.22)}
+.card .glow{position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%), rgba(255,255,255,.08), transparent 45%);pointer-events:none;opacity:0;transition:opacity .3s}
+.card:hover .glow{opacity:1}
+.span-3{grid-column:span 3}.span-2{grid-column:span 2}
+.ico{width:54px;height:54px;border-radius:16px;display:grid;place-items:center}
+.ico svg{width:28px;height:28px}
+.card h3{font-size:24px;font-weight:700}
+.card ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;color:var(--muted);font-size:15.5px}
+.card li{display:flex;gap:10px}
+.card li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;margin-top:9px;background:var(--c,var(--orange))}
+.kind{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lic{margin-top:auto;font-size:13.5px;color:var(--cream);background:rgba(255,106,43,.12);border:1px solid rgba(255,106,43,.35);padding:10px 12px;border-radius:12px}
+.lic b{color:var(--sun)}
+@media (max-width:980px){.span-3,.span-2{grid-column:span 3}}
+@media (max-width:640px){.bento{grid-template-columns:1fr}.span-3,.span-2{grid-column:auto}}
+
+/* ---------- METHODE ---------- */
+.timeline{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;position:relative;list-style:none;margin:0;padding:0}
+.timeline::before{content:"";position:absolute;left:30px;right:30px;top:30px;height:2px;background:linear-gradient(90deg,var(--orange),var(--teal),var(--sun),var(--cream),var(--orange));opacity:.5}
+.timeline li{position:relative;display:flex;flex-direction:column;gap:12px;min-width:0}
+.num{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:20px;background:var(--ink);border:2px solid var(--c);color:var(--c);position:relative;z-index:1;box-shadow:0 0 0 8px var(--ink)}
+.timeline h3{font-size:19px;font-weight:700;margin-top:8px}
+.timeline p{color:var(--muted);font-size:15.5px}
+@media (max-width:860px){.timeline{grid-template-columns:1fr;gap:26px}.timeline::before{left:29px;right:auto;top:30px;bottom:30px;width:2px;height:auto;background:linear-gradient(180deg,var(--orange),var(--teal),var(--sun),var(--cream),var(--orange))}.timeline li{flex-direction:row;align-items:flex-start;gap:20px}.timeline li > div{display:flex;flex-direction:column;gap:6px}.timeline h3{margin-top:14px}}
+
+/* ---------- REALISATIONS ---------- */
+.ba-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:900px){.ba-layout{grid-template-columns:1fr}}
+.compare{position:relative;aspect-ratio:4/3;max-width:100%;border-radius:var(--radius);overflow:hidden;background:var(--ink-3);border:1px solid var(--line);--pos:50%;user-select:none;touch-action:pan-y}
+.compare img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.compare .before{clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.compare .handle{position:absolute;top:0;bottom:0;left:var(--pos);width:3px;margin-left:-1.5px;background:var(--cream);pointer-events:none;box-shadow:0 0 20px rgba(0,0,0,.5)}
+.compare .handle::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:var(--cream);color:var(--on-accent);display:grid;place-items:center;font-size:22px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.compare input[type=range]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0;z-index:3}
+.compare input[type=range]:focus-visible ~ .handle::after{outline:3px solid var(--sun);outline-offset:3px}
+.lbl{position:absolute;top:16px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;padding:7px 12px;border-radius:999px;z-index:2;pointer-events:none}
+.lbl.b{left:16px;background:rgba(11,17,36,.75);color:var(--cream)}
+.lbl.a{right:16px;background:var(--teal);color:var(--on-accent)}
+.ba-meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:16px;flex-wrap:wrap}
+.ba-meta h3{font-size:22px;font-weight:700}
+.ba-meta span{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.08em}
+.side{display:flex;flex-direction:column;gap:14px;min-width:0}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.filter{font:inherit;font-size:14px;color:var(--muted);background:var(--ink-2);border:1px solid var(--line);padding:8px 14px;border-radius:999px;cursor:pointer}
+.filter[aria-pressed=true]{background:var(--cream);color:var(--on-accent);border-color:var(--cream);font-weight:700}
+.thumbs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.thumb{font:inherit;color:inherit;text-align:left;background:var(--ink-2);border:1px solid var(--line);border-radius:16px;padding:8px;cursor:pointer;display:flex;flex-direction:column;gap:8px;transition:border-color .2s,transform .2s;min-width:0}
+.thumb:hover{transform:translateY(-2px)}
+.thumb[aria-current=true]{border-color:var(--orange);box-shadow:0 0 0 1px var(--orange)}
+.thumb img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px}
+.thumb b{font-size:14px;padding:0 4px 4px;line-height:1.3;overflow-wrap:anywhere}
+.empty{background:var(--ink-2);border:1px dashed rgba(246,239,227,.2);border-radius:16px;padding:22px;color:var(--muted);font-size:15px;display:flex;flex-direction:column;gap:8px}
+.empty strong{color:var(--cream);font-family:var(--display);font-size:17px;font-weight:700}
+.demo-badge{position:absolute;bottom:16px;left:16px;z-index:2;background:var(--sun);color:var(--on-accent);font-family:var(--mono);font-size:12px;padding:6px 12px;border-radius:999px;pointer-events:none}
+
+/* ---------- ENGAGEMENTS ---------- */
+.promises{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.promise{background:var(--ink);padding:30px;display:flex;flex-direction:column;gap:10px;min-width:0;transition:background .3s}
+.promise:hover{background:var(--ink-2)}
+.promise h3{font-size:19px;font-weight:700}
+.promise p{color:var(--muted);font-size:15.5px}
+.promise .ico{width:46px;height:46px;border-radius:14px}
+@media (max-width:860px){.promises{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.promises{grid-template-columns:1fr}}
+
+/* ---------- EQUIPE ---------- */
+.team{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.member{background:var(--ink-2);border:1px solid var(--line);border-radius:var(--radius);padding:30px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.avatar{width:76px;height:76px;border-radius:24px;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:24px;color:var(--on-accent);transform:rotate(-6deg)}
+.member h3{font-size:22px;font-weight:700;margin-top:6px}
+.role{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase}
+.member p{color:var(--muted);font-size:15.5px}
+.member.together{background:linear-gradient(160deg,#1E2A52,var(--ink-2));border-color:rgba(255,201,74,.35)}
+.member.together ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;color:var(--cream);font-size:15.5px}
+.member.together li{display:flex;gap:10px}
+.member.together li::before{content:"✓";color:var(--sun);font-weight:700}
+@media (max-width:900px){.team{grid-template-columns:1fr}}
+
+/* ---------- CONTACT ---------- */
+.cta{position:relative;border-radius:34px;padding:clamp(28px,5vw,64px);overflow:hidden;background:var(--ink-2);border:1px solid var(--line);isolation:isolate}
+.cta canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;filter:blur(36px);opacity:.55}
+.cta h2{font-size:clamp(30px,5vw,60px);font-weight:800;max-width:18ch}
+.cta .lead{margin-top:18px;color:var(--cream);opacity:.85}
+.phones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:36px}
+.phone{background:rgba(11,17,36,.72);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.phone .who{font-weight:700}
+.phone .num-txt{font-family:var(--display);font-weight:700;font-size:clamp(22px,3vw,30px);user-select:all;letter-spacing:-.01em}
+.phone .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+@media (max-width:700px){.phones{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--line);padding-block:32px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+.sound{position:absolute;z-index:3;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 22px)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+  .marquee-track{animation:none}
+}
+</style>
+
+</head>
+<body>
+<!-- ================= NAV ================= -->
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Teranga, accueil">Teranga<span>.</span></a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#offre">Clé en main</a>
+      <a href="#services">Services</a>
+      <a href="#methode">Méthode</a>
+      <a href="#realisations">Avant / après</a>
+      <a href="#equipe">Équipe</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="#contact">Devis gratuit</a>
+  </div>
+</header>
+
+<main id="top">
+<!-- ================= HERO ================= -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true">
+    <canvas id="ribbons"></canvas>
+    <video id="hero-video" muted loop playsinline autoplay hidden></video>
+  </div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <button class="btn btn-ghost btn-sm sound" id="sound" type="button" aria-pressed="false" hidden>🔊 Activer le son</button>
+  <div class="wrap hero-inner">
+    <div>
+      <p class="eyebrow">Services immobiliers · Montréal</p>
+      <h1 id="hero-title" style="margin-top:22px">
+        <span class="line"><span>Vos logements,</span></span>
+        <span class="line"><span class="rotator" id="rotator" aria-live="off">
+          <b class="on">prêts à louer.</b><b>impeccables.</b><b>sécurisés.</b><b>connectés.</b>
+        </span></span>
+      </h1>
+      <p class="lead">Peinture, nettoyage, réparations, informatique et sécurité incendie. Une seule équipe, un seul appel, et des photos avant / après à chaque intervention.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#contact">Demander un devis →</a>
+        <a class="btn btn-ghost" href="#realisations">Voir avant / après</a>
+      </div>
+      <div class="hero-tags" aria-label="Points forts">
+        <span class="tag">Devis gratuit</span><span class="tag">Photos avant / après</span><span class="tag">Licence sécurité incendie</span>
+      </div>
+    </div>
+
+    <aside class="job" aria-label="Exemple : forfait Clé en main en cours">
+      <div class="job-top">
+        <span class="live">CHANTIER EN COURS</span>
+        <span class="tag">Exemple</span>
+      </div>
+      <h3>Forfait Clé en main</h3>
+      <p class="addr">4½ libéré · entre deux locataires</p>
+      <ol class="steps" id="job-steps">
+        <li><span class="dot"></span>Nettoyage complet</li>
+        <li><span class="dot"></span>Peinture &amp; retouches</li>
+        <li><span class="dot"></span>Réparations</li>
+        <li><span class="dot"></span>Vérifications</li>
+        <li><span class="dot"></span>Photos avant / après</li>
+      </ol>
+      <div class="bar"><i id="job-bar"></i></div>
+      <div class="job-foot"><span id="job-pct">0 %</span><span id="job-state">Logement en préparation</span></div>
+    </aside>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Peinture</span><span>Nettoyage</span><span>Réparations</span><span>Sites web &amp; chatbots</span><span>Informatique</span><span>Sécurité incendie</span><span>Alarmes</span><span>Conciergerie</span>
+    <span>Peinture</span><span>Nettoyage</span><span>Réparations</span><span>Sites web &amp; chatbots</span><span>Informatique</span><span>Sécurité incendie</span><span>Alarmes</span><span>Conciergerie</span>
+  </div>
+</div>
+
+<!-- ================= OFFRE ================= -->
+<section class="band" id="offre" aria-labelledby="offre-title">
+  <div class="wrap">
+    <div class="offer">
+      <p class="eyebrow">Notre offre phare</p>
+      <h2 id="offre-title">Le forfait Clé en main</h2>
+      <p class="big">Un locataire part ? Un seul appel. On vous rend un logement prêt à louer, sans que vous ayez à coordonner qui que ce soit.</p>
+      <div class="chain">
+        <span class="chip"><small>01</small>Nettoyage complet</span><span class="arrow" aria-hidden="true">→</span>
+        <span class="chip"><small>02</small>Peinture &amp; retouches</span><span class="arrow" aria-hidden="true">→</span>
+        <span class="chip"><small>03</small>Réparations</span><span class="arrow" aria-hidden="true">→</span>
+        <span class="chip"><small>04</small>Vérifications</span><span class="arrow" aria-hidden="true">→</span>
+        <span class="chip"><small>05</small>Photos avant / après</span><span class="arrow" aria-hidden="true">=</span>
+        <span class="chip final">Logement prêt ✓</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section class="band" id="services" aria-labelledby="services-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Nos services</p>
+      <h2 class="h2" id="services-title">Tout votre immeuble, une seule équipe</h2>
+      <p class="lead">Le cœur du métier pour remettre vos logements en état, et une vraie expertise technique que peu d’équipes d’entretien peuvent offrir.</p>
+    </div>
+    <div class="bento">
+      <article class="card span-3 tilt" style="--c:var(--orange)">
+        <span class="glow"></span>
+        <span class="kind">Le cœur du métier</span>
+        <div class="ico" style="background:var(--orange);color:var(--on-accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="14" height="6" rx="2"/><path d="M17 6h2a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-7v3"/><rect x="10" y="14" width="4" height="7" rx="1"/></svg></div>
+        <h3>Peinture</h3>
+        <ul><li>Préparation et protection des surfaces</li><li>Trous et imperfections réparés</li><li>Apprêt et peinture de finition</li><li>Rafraîchissement entre deux locations</li><li>Retouches des espaces communs</li></ul>
+      </article>
+      <article class="card span-3 tilt" style="--c:var(--teal)">
+        <span class="glow"></span>
+        <span class="kind">Le cœur du métier</span>
+        <div class="ico" style="background:var(--teal);color:var(--on-accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8z"/><path d="M19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9z"/><path d="M5 15l.6 1.4L7 17l-1.4.6L5 19l-.6-1.4L3 17l1.4-.6z"/></svg></div>
+        <h3>Nettoyage &amp; entretien</h3>
+        <ul><li>Logements vacants, avant l’arrivée des locataires</li><li>Cuisines et salles de bain</li><li>Corridors, escaliers, espaces communs</li><li>Nettoyage après travaux</li><li>Entretien régulier de l’immeuble</li></ul>
+      </article>
+      <article class="card span-2 tilt" style="--c:var(--sun)">
+        <span class="glow"></span>
+        <span class="kind">Le cœur du métier</span>
+        <div class="ico" style="background:var(--sun);color:var(--on-accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></div>
+        <h3>Réparations</h3>
+        <ul><li>Poignées et accessoires</li><li>Étagères et fixations</li><li>Finitions et ajustements</li><li>Entretien général</li></ul>
+      </article>
+      <article class="card span-2 tilt" style="--c:var(--teal)">
+        <span class="glow"></span>
+        <span class="kind">Technologie</span>
+        <div class="ico" style="background:rgba(34,195,181,.16);color:var(--teal);border:1px solid rgba(34,195,181,.4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l-4 3 4 3"/><path d="M16 9l4 3-4 3"/><path d="M13.5 6l-3 12"/></svg></div>
+        <h3>Informatique &amp; web</h3>
+        <ul><li>Sites web et chatbots sur mesure</li><li>Ordinateurs et réseaux Wi-Fi</li><li>Diagnostic et dépannage</li><li>Équipements connectés</li><li>Soutien au bureau de gestion</li></ul>
+      </article>
+      <article class="card span-2 tilt" style="--c:var(--orange)">
+        <span class="glow"></span>
+        <span class="kind">Sécurité</span>
+        <div class="ico" style="background:rgba(255,106,43,.16);color:var(--orange);border:1px solid rgba(255,106,43,.45)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Sécurité &amp; incendie</h3>
+        <ul><li>Systèmes d’alarme</li><li>Systèmes de sécurité incendie</li><li>Détection et alerte</li><li>Caméras et surveillance</li></ul>
+        <p class="lic">Réalisé par <b>Pape Bouna</b>, titulaire de la licence exigée au Québec.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= METHODE ================= -->
+<section class="band" id="methode" aria-labelledby="methode-title" style="background:var(--ink-2);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Notre méthode</p>
+      <h2 class="h2" id="methode-title">Cinq étapes, zéro surprise</h2>
+    </div>
+    <ol class="timeline">
+      <li style="--c:var(--orange)"><span class="num">1</span><div><h3>Demande</h3><p>Un appel ou un texto. On vous répond rapidement.</p></div></li>
+      <li style="--c:var(--teal)"><span class="num">2</span><div><h3>Visite</h3><p>On évalue le logement sur place, sans frais.</p></div></li>
+      <li style="--c:var(--sun)"><span class="num">3</span><div><h3>Devis clair</h3><p>Le prix est fixé et approuvé avant de commencer.</p></div></li>
+      <li style="--c:var(--cream)"><span class="num">4</span><div><h3>Travaux</h3><p>Travail soigné, chantier laissé propre.</p></div></li>
+      <li style="--c:var(--orange)"><span class="num">5</span><div><h3>Rapport photo</h3><p>Photos avant / après envoyées. Vous validez.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= REALISATIONS ================= -->
+<section class="band" id="realisations" aria-labelledby="real-title">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Nos réalisations</p>
+      <h2 class="h2" id="real-title">Glissez pour voir la différence</h2>
+      <p class="lead">Chaque intervention est documentée avant et après. Faites glisser la poignée pour comparer.</p>
+    </div>
+    <div class="ba-layout">
+      <div>
+        <div class="compare" id="compare">
+          <img class="after" id="img-after" alt="">
+          <img class="before" id="img-before" alt="">
+          <span class="lbl b">AVANT</span><span class="lbl a">APRÈS</span>
+          <span class="demo-badge" id="demo-badge" hidden>Aperçu de démonstration</span>
+          <input type="range" id="ba-range" min="0" max="100" value="50" aria-label="Comparer avant et après">
+          <span class="handle" aria-hidden="true"></span>
+        </div>
+        <div class="ba-meta"><h3 id="ba-title">Mur de salon</h3><span id="ba-cat">DÉMO</span></div>
+      </div>
+      <div class="side">
+        <div class="filters" id="filters" role="group" aria-label="Filtrer par type de travaux"></div>
+        <div class="thumbs" id="thumbs"></div>
+        <div class="empty" id="gallery-empty" hidden>
+          <strong>Les premiers chantiers arrivent</strong>
+          <span>Nos photos avant / après seront publiées ici au fil des interventions. L’aperçu ci-contre montre comment elles s’afficheront.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ENGAGEMENTS ================= -->
+<section class="band" id="engagements" aria-labelledby="eng-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Nos engagements</p>
+      <h2 class="h2" id="eng-title">Ce que vous pouvez exiger de nous</h2>
+    </div>
+    <div class="promises">
+      <div class="promise"><div class="ico" style="background:rgba(255,106,43,.14);color:var(--orange)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Réponse rapide</h3><p>Vous n’attendez pas après nous.</p></div>
+      <div class="promise"><div class="ico" style="background:rgba(34,195,181,.14);color:var(--teal)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 13l2 2 4-4"/></svg></div><h3>Devis gratuit</h3><p>Validé par vous avant chaque travail.</p></div>
+      <div class="promise"><div class="ico" style="background:rgba(255,201,74,.14);color:var(--sun)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M6 16l3-9h6l3 9"/></svg></div><h3>Chantier propre</h3><p>Quand on part, il ne reste que le résultat.</p></div>
+      <div class="promise"><div class="ico" style="background:rgba(255,106,43,.14);color:var(--orange)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></div><h3>Photos avant / après</h3><p>Une preuve pour chaque intervention.</p></div>
+      <div class="promise"><div class="ico" style="background:rgba(34,195,181,.14);color:var(--teal)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div><h3>Un seul interlocuteur</h3><p>Une communication directe, sans détour.</p></div>
+      <div class="promise"><div class="ico" style="background:rgba(255,201,74,.14);color:var(--sun)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21 20c0-2.6-1.6-4.8-4-5.6"/></svg></div><h3>Respect des locataires</h3><p>Discrétion et politesse, toujours.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EQUIPE ================= -->
+<section class="band" id="equipe" aria-labelledby="team-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">L’équipe</p>
+      <h2 class="h2" id="team-title">Deux spécialistes, une seule équipe</h2>
+    </div>
+    <div class="team">
+      <article class="member">
+        <div class="avatar" style="background:var(--orange)">PN</div>
+        <h3>Pape Bouna Semou Niang</h3>
+        <span class="role" style="color:var(--orange)">Sécurité &amp; incendie</span>
+        <p>Installation d’équipements de sécurité et de systèmes incendie. Titulaire de la licence exigée au Québec.</p>
+      </article>
+      <article class="member">
+        <div class="avatar" style="background:var(--teal);transform:rotate(5deg)">DS</div>
+        <h3>Demba Sow</h3>
+        <span class="role" style="color:var(--teal)">Informatique &amp; génie logiciel</span>
+        <p>Technicien informatique et ingénieur en génie logiciel. Sites web, chatbots, réseaux, dépannage. Devis, suivi et rapports photo.</p>
+      </article>
+      <article class="member together">
+        <div class="avatar" style="background:var(--sun);transform:rotate(-2deg);font-size:28px">+</div>
+        <h3>Ensemble, déjà à l’œuvre</h3>
+        <ul><li>Conciergerie d’immeuble</li><li>Nettoyage et entretien</li><li>Peinture entre deux locataires</li><li>Réparations et finitions</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="band" id="contact" aria-labelledby="cta-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta">
+      <canvas id="cta-ribbons" aria-hidden="true"></canvas>
+      <p class="eyebrow">Parlons-en</p>
+      <h2 id="cta-title" style="margin-top:18px">Un logement se libère bientôt ?</h2>
+      <p class="lead">Confiez-nous-le comme appartement pilote. Devis gratuit, approuvé d’avance, et vous jugez sur le résultat.</p>
+      <div class="phones">
+        <div class="phone">
+          <span class="who">Pape Bouna Semou Niang</span>
+          <span class="num-txt">438 989-1469</span>
+          <div class="acts">
+            <a class="btn btn-primary btn-sm" href="tel:+14389891469">Appeler</a>
+            <a class="btn btn-ghost btn-sm" href="sms:+14389891469">Texto</a>
+            <button class="btn btn-ghost btn-sm copy" type="button" data-copy="438 989-1469">Copier</button>
+          </div>
+        </div>
+        <div class="phone">
+          <span class="who">Demba Sow</span>
+          <span class="num-txt">819 701-8681</span>
+          <div class="acts">
+            <a class="btn btn-primary btn-sm" href="tel:+18197018681">Appeler</a>
+            <a class="btn btn-ghost btn-sm" href="sms:+18197018681">Texto</a>
+            <button class="btn btn-ghost btn-sm copy" type="button" data-copy="819 701-8681">Copier</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b style="color:var(--cream);font-family:var(--display)">Teranga<span style="color:var(--orange)">.</span></b> · Services immobiliers · Montréal</span>
+    <span>« Teranga » : l’hospitalité, en wolof.</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = (s, r = document) => r.querySelector(s);
+
+  /* ---------- Paint ribbons (hero + contact) ---------- */
+  function ribbons(canvas, opts = {}) {
+    const ctx = canvas.getContext('2d');
+    const cols = ['255,106,43', '34,195,181', '255,201,74', '255,106,43', '120,140,255'];
+    const R = cols.map((c, i) => ({ c, y: .2 + i * .16, amp: 60 + i * 18, f: .0022 + i * .0004, s: .25 + i * .07, ph: i * 1.7, th: 70 + (i % 3) * 30 }));
+    let w, h, t = 0, mx = 0, my = 0, raf;
+    const scale = .5;
+    function size() {
+      const r = canvas.getBoundingClientRect();
+      w = canvas.width = Math.max(1, Math.round(r.width * scale));
+      h = canvas.height = Math.max(1, Math.round(r.height * scale));
+    }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'lighter';
+      for (const r of R) {
+        const g = ctx.createLinearGradient(0, 0, w, 0);
+        g.addColorStop(0, `rgba(${r.c},0)`); g.addColorStop(.35, `rgba(${r.c},.75)`);
+        g.addColorStop(.7, `rgba(${r.c},.55)`); g.addColorStop(1, `rgba(${r.c},0)`);
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        const top = [], bot = [];
+        for (let x = -40; x <= w + 40; x += 14) {
+          const X = x / scale;
+          const y = (r.y + my * .04) * h + (Math.sin(X * r.f + t * r.s + r.ph + mx) * r.amp + Math.sin(X * r.f * .5 - t * r.s * .7) * r.amp * .6) * scale * (opts.k || 1);
+          const th = r.th * scale * (.55 + .45 * Math.sin(X * .003 + t * .6 + r.ph));
+          top.push([x, y - th / 2]); bot.push([x, y + th / 2]);
+        }
+        ctx.moveTo(top[0][0], top[0][1]);
+        top.forEach(p => ctx.lineTo(p[0], p[1]));
+        for (let i = bot.length - 1; i >= 0; i--) ctx.lineTo(bot[i][0], bot[i][1]);
+        ctx.closePath(); ctx.fill();
+      }
+    }
+    function loop() { t += .012; draw(); raf = requestAnimationFrame(loop); }
+    size(); draw();
+    addEventListener('resize', () => { size(); draw(); });
+    if (!reduce) {
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (e.isIntersecting) { cancelAnimationFrame(raf); loop(); } else cancelAnimationFrame(raf);
+      }));
+      io.observe(canvas);
+      if (opts.mouse) addEventListener('pointermove', e => { mx = (e.clientX / innerWidth - .5) * .8; my = (e.clientY / innerHeight - .5); }, { passive: true });
+    }
+  }
+  ribbons($('#ribbons'), { mouse: true });
+  ribbons($('#cta-ribbons'), { k: .7 });
+
+  /* ---------- Rotating word ---------- */
+  const words = [...$('#rotator').children];
+  let wi = 0;
+  if (!reduce) setInterval(() => {
+    const cur = words[wi]; wi = (wi + 1) % words.length; const nxt = words[wi];
+    cur.classList.remove('on'); cur.classList.add('out');
+    nxt.classList.remove('out'); nxt.classList.add('on');
+    setTimeout(() => cur.classList.remove('out'), 700);
+  }, 2600);
+
+  /* ---------- Live job card ---------- */
+  const steps = [...$('#job-steps').children];
+  let js = 0;
+  function tick() {
+    steps.forEach((li, i) => { li.classList.toggle('done', i < js); li.classList.toggle('now', i === js); });
+    const pct = Math.round(js / steps.length * 100);
+    $('#job-bar').style.width = pct + '%';
+    $('#job-pct').textContent = pct + ' %';
+    $('#job-state').innerHTML = js >= steps.length ? '<b>Logement prêt à louer ✓</b>' : 'Logement en préparation';
+  }
+  if (reduce) { js = steps.length; tick(); }
+  else { tick(); setInterval(() => { js = js > steps.length ? 0 : js + 1; tick(); }, 1400); }
+
+  /* ---------- Tilt cards ---------- */
+  if (!reduce && matchMedia('(hover:hover)').matches) {
+    document.querySelectorAll('.tilt').forEach(c => {
+      c.addEventListener('pointermove', e => {
+        const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        c.style.transform = `perspective(900px) rotateX(${(.5 - y) * 6}deg) rotateY(${(x - .5) * 8}deg)`;
+        c.style.setProperty('--mx', x * 100 + '%'); c.style.setProperty('--my', y * 100 + '%');
+      });
+      c.addEventListener('pointerleave', () => { c.style.transform = ''; });
+    });
+  }
+
+  /* ---------- Copy buttons ---------- */
+  document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', () => {
+    const txt = b.dataset.copy, done = () => { b.textContent = 'Copié ✓'; setTimeout(() => b.textContent = 'Copier', 1800); };
+    const fallback = () => { const n = b.closest('.phone').querySelector('.num-txt'); const r = document.createRange(); r.selectNodeContents(n); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Sélectionné'; };
+    try { navigator.clipboard.writeText(txt).then(done, fallback); } catch (e) { fallback(); }
+  }));
+
+  /* ---------- Demo before/after (drawn, shown only while the gallery is empty) ---------- */
+  function room(dirty) {
+    const c = document.createElement('canvas'); c.width = 1200; c.height = 900;
+    const x = c.getContext('2d');
+    // wall
+    const wall = x.createLinearGradient(0, 0, 0, 900);
+    if (dirty) { wall.addColorStop(0, '#8E8778'); wall.addColorStop(1, '#6F695C'); }
+    else { wall.addColorStop(0, '#F3EEE4'); wall.addColorStop(1, '#E6DFD1'); }
+    x.fillStyle = wall; x.fillRect(0, 0, 1200, 700);
+    // accent wall panel (after)
+    if (!dirty) { x.fillStyle = '#1F8F86'; x.fillRect(760, 0, 440, 700); }
+    // window
+    x.fillStyle = dirty ? '#5E6B78' : '#BFE3F2'; x.fillRect(150, 140, 300, 300);
+    x.strokeStyle = dirty ? '#4E4A42' : '#FFFFFF'; x.lineWidth = 18; x.strokeRect(150, 140, 300, 300);
+    x.beginPath(); x.moveTo(300, 140); x.lineTo(300, 440); x.moveTo(150, 290); x.lineTo(450, 290); x.stroke();
+    if (!dirty) { const s = x.createLinearGradient(150, 140, 450, 440); s.addColorStop(0, 'rgba(255,255,255,.5)'); s.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = s; x.fillRect(160, 150, 130, 130); }
+    // floor
+    const fl = x.createLinearGradient(0, 700, 0, 900);
+    fl.addColorStop(0, dirty ? '#5A4B3A' : '#C8955E'); fl.addColorStop(1, dirty ? '#3E3428' : '#A87442');
+    x.fillStyle = fl; x.fillRect(0, 700, 1200, 200);
+    x.strokeStyle = dirty ? 'rgba(0,0,0,.25)' : 'rgba(90,50,20,.25)'; x.lineWidth = 3;
+    for (let i = 0; i < 1200; i += 150) { x.beginPath(); x.moveTo(i, 700); x.lineTo(i - 120, 900); x.stroke(); }
+    // baseboard
+    x.fillStyle = dirty ? '#7A7366' : '#FFFFFF'; x.fillRect(0, 680, 1200, 24);
+    // frame / plant (after)
+    if (!dirty) {
+      x.fillStyle = '#FF6A2B'; x.fillRect(880, 200, 200, 150); x.fillStyle = '#FFC94A'; x.fillRect(900, 220, 160, 110);
+      x.fillStyle = '#2E5E3A'; x.beginPath(); x.ellipse(620, 560, 70, 110, 0, 0, Math.PI * 2); x.fill();
+      x.fillStyle = '#E8DCC8'; x.fillRect(575, 600, 90, 90);
+    } else {
+      // stains, holes, cracks, scuffs
+      const rnd = (() => { let s = 7; return () => (s = (s * 9301 + 49297) % 233280) / 233280; })();
+      for (let i = 0; i < 14; i++) { x.fillStyle = `rgba(60,50,35,${.12 + rnd() * .18})`; x.beginPath(); x.ellipse(rnd() * 1200, rnd() * 650, 20 + rnd() * 90, 14 + rnd() * 60, rnd() * 3, 0, Math.PI * 2); x.fill(); }
+      x.fillStyle = '#2A2620'; [[620, 210], [980, 330], [700, 520], [1050, 150]].forEach(([a, b]) => { x.beginPath(); x.arc(a, b, 9, 0, Math.PI * 2); x.fill(); });
+      x.strokeStyle = 'rgba(40,35,28,.7)'; x.lineWidth = 3; x.beginPath(); x.moveTo(820, 40); x.lineTo(860, 130); x.lineTo(840, 210); x.lineTo(900, 300); x.stroke();
+      x.fillStyle = 'rgba(176,168,150,.9)'; x.fillRect(560, 120, 140, 90); x.fillRect(930, 420, 170, 110);
+    }
+    return c.toDataURL('image/jpeg', .85);
+  }
+
+  /* ---------- Gallery state ---------- */
+  let state = { heroVideo: null, projects: [] };
+  const localUrls = {};               // path -> blob: URL for files saved in this view
+  const src = p => localUrls[p] || p; // relative URLs serve the loaded version
+  let filter = 'Tous', current = null, demo = null;
+
+  const range = $('#ba-range'), cmp = $('#compare');
+  range.addEventListener('input', () => cmp.style.setProperty('--pos', range.value + '%'));
+  // gentle intro sweep so the slider reads as interactive
+  function sweep() {
+    if (reduce) return;
+    let t0 = null;
+    const step = ts => { t0 ??= ts; const k = Math.min(1, (ts - t0) / 1600); const v = 50 + Math.sin(k * Math.PI * 2) * 22 * (1 - k); range.value = v; cmp.style.setProperty('--pos', v + '%'); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { sweep(); o.disconnect(); } }), { threshold: .5 }).observe(cmp);
+
+  function show(p) {
+    current = p;
+    if (!p) {
+      demo ??= { before: room(true), after: room(false) };
+      $('#img-before').src = demo.before; $('#img-after').src = demo.after;
+      $('#img-before').alt = 'Démonstration : mur taché et abîmé avant les travaux';
+      $('#img-after').alt = 'Démonstration : même pièce repeinte après les travaux';
+      $('#ba-title').textContent = 'Mur de salon'; $('#ba-cat').textContent = 'DÉMO';
+      $('#demo-badge').hidden = false;
+    } else {
+      $('#img-before').src = src(p.before); $('#img-after').src = src(p.after);
+      $('#img-before').alt = `${p.title}, avant les travaux`; $('#img-after').alt = `${p.title}, après les travaux`;
+      $('#ba-title').textContent = p.title; $('#ba-cat').textContent = p.category.toUpperCase();
+      $('#demo-badge').hidden = true;
+    }
+    document.querySelectorAll('.thumb').forEach(t => t.setAttribute('aria-current', String(t.dataset.id === p?.id)));
+  }
+
+  function renderGallery() {
+    const ps = state.projects;
+    $('#gallery-empty').hidden = ps.length > 0;
+    const cats = ['Tous', ...new Set(ps.map(p => p.category))];
+    if (!cats.includes(filter)) filter = 'Tous';
+    const fwrap = $('#filters'); fwrap.replaceChildren();
+    if (ps.length > 1) cats.forEach(c => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'filter'; b.textContent = c;
+      b.setAttribute('aria-pressed', String(c === filter));
+      b.onclick = () => { filter = c; renderGallery(); }; fwrap.append(b);
+    });
+    const list = ps.filter(p => filter === 'Tous' || p.category === filter);
+    const th = $('#thumbs'); th.replaceChildren();
+    list.forEach(p => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'thumb'; b.dataset.id = p.id;
+      const im = document.createElement('img'); im.src = src(p.after); im.alt = ''; im.loading = 'lazy';
+      const t = document.createElement('b'); t.textContent = p.title;
+      b.append(im, t); b.onclick = () => show(p); th.append(b);
+    });
+    show(list.find(p => p.id === current?.id) || list[0] || null);
+  }
+
+  function renderVideo() {
+    const v = $('#hero-video');
+    const btn = $('#sound');
+    if (state.heroVideo && !reduce) {
+      v.src = src(state.heroVideo); v.hidden = false; v.play?.().catch(() => {});
+      btn.hidden = false;
+      btn.onclick = () => {
+        v.muted = !v.muted;
+        if (!v.muted) { v.volume = .7; v.play?.().catch(() => {}); }
+        btn.setAttribute('aria-pressed', String(!v.muted));
+        btn.textContent = v.muted ? '🔊 Activer le son' : '🔇 Couper le son';
+      };
+    }
+    else { v.removeAttribute('src'); v.hidden = true; btn.hidden = true; }
+  }
+
+  fetch('data/gallery.json', { cache: 'no-store' })
+    .then(r => r.ok ? r.json() : null)
+    .then(d => { if (d && Array.isArray(d.projects)) state = { heroVideo: d.heroVideo || null, projects: d.projects }; })
+    .catch(() => {})
+    .finally(() => { renderGallery(); renderVideo(); });
+  renderGallery();
+
+})();
+</script>
+</body>
+</html>
